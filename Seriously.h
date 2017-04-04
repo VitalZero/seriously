@@ -114,7 +114,7 @@ struct Traits<uint8_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -134,7 +134,7 @@ struct Traits<int16_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -154,7 +154,7 @@ struct Traits<uint16_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -174,7 +174,7 @@ struct Traits<int32_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -194,7 +194,7 @@ struct Traits<uint32_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -214,7 +214,7 @@ struct Traits<int64_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -234,7 +234,7 @@ struct Traits<uint64_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -254,7 +254,7 @@ struct Traits<size_t>
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
