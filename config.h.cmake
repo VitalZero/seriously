@@ -18,6 +18,24 @@
 /* Define to 1 if you have the system is big endian */
 #cmakedefine IS_BIG_ENDIAN 1
 
+/* Define to 1 if you have the htons function. */
+#cmakedefine HAVE_HTONS 1
+
+/* Define to 1 if you have the ntohs function. */
+#cmakedefine HAVE_NTOHS 1
+
+/* Define to 1 if you have the htonl function. */
+#cmakedefine HAVE_HTONL 1
+
+/* Define to 1 if you have the ntohl function. */
+#cmakedefine HAVE_NTOHL 1
+
+/* Define to 1 if you have the htonll function. */
+#cmakedefine HAVE_HTONLL 1
+
+/* Define to 1 if you have the ntohll function. */
+#cmakedefine HAVE_NTOHLL 1
+
 /* Define to 1 if you have the size_t type. */
 #cmakedefine HAVE_SIZE_T 1
 

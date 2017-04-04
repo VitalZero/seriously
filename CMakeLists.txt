@@ -12,6 +12,7 @@ CHECK_INCLUDE_FILES (stdint.h HAVE_STDINT_H)
 CHECK_INCLUDE_FILES (stddef.h HAVE_STDDEF_H)
 CHECK_INCLUDE_FILES (unistd.h HAVE_UNISTD_H)
 CHECK_INCLUDE_FILES (sys/types.h HAVE_SYS_TYPES_H)
+CHECK_INCLUDE_FILES (arpa/inet.h HAVE_ARPA_INET_H)
 CHECK_INCLUDE_FILES (Windows.h HAVE_WINDOWS_H)
 CHECK_INCLUDE_FILES (BaseTsd.h HAVE_BASETSD_H)
 
@@ -38,6 +39,54 @@ check_cxx_source_runs("
     return 0;
   }
 " IS_BIG_ENDIAN)
+
+check_cxx_source_compiles("
+  #include <stdint.h>
+  #include <stddef.h>
+  #include <unistd.h>
+  #include <arpa/inet.h>
+  int main() { uint16_t r = htons(1); return 0; }
+" HAVE_HTONS)
+
+check_cxx_source_compiles("
+  #include <stdint.h>
+  #include <stddef.h>
+  #include <unistd.h>
+  #include <arpa/inet.h>
+  int main() { uint16_t r = ntohs(1); return 0; }
+" HAVE_NTOHS)
+
+check_cxx_source_compiles("
+  #include <stdint.h>
+  #include <stddef.h>
+  #include <unistd.h>
+  #include <arpa/inet.h>
+  int main() { uint32_t r = htonl(1); return 0; }
+" HAVE_HTONL)
+
+check_cxx_source_compiles("
+  #include <stdint.h>
+  #include <stddef.h>
+  #include <unistd.h>
+  #include <arpa/inet.h>
+  int main() { uint32_t r = ntohl(1); return 0; }
+" HAVE_NTOHL)
+
+check_cxx_source_compiles("
+  #include <stdint.h>
+  #include <stddef.h>
+  #include <unistd.h>
+  #include <arpa/inet.h>
+  int main() { uint64_t r = htonll(1); return 0; }
+" HAVE_HTONLL)
+
+check_cxx_source_compiles("
+  #include <stdint.h>
+  #include <stddef.h>
+  #include <unistd.h>
+  #include <arpa/inet.h>
+  int main() { uint64_t r = ntohll(1); return 0; }
+" HAVE_NTOHLL)
 
 check_cxx_source_compiles("
   #include <stdint.h>
