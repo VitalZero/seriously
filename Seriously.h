@@ -32,6 +32,18 @@
 
 #include "config.h"
 
+#if defined(_MSC_VER)
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
+#else
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif /* HAVE_UNISTD_H */
+#endif
+
 #ifndef UNUSED
 #define UNUSED(expr) do { (void)(expr); } while (0)
 #endif
