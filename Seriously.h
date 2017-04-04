@@ -28,6 +28,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <string.h>
 
 #ifndef UNUSED
 #define UNUSED(expr) do { (void)(expr); } while (0)
@@ -41,7 +42,9 @@ template <typename T>
 struct Traits;
 // {
 // 	typedef T type;
-// 	enum { Size = sizeof(T) };
+// 	typedef T serialized_type;
+// 	enum { Size = sizeof(type) };
+// 	enum { SerializedSize = sizeof(serialized_type) };
 
 // 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 // 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -62,14 +65,16 @@ template <>
 struct Traits<bool>
 {
 	typedef bool type;
+	typedef char serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
 
 	static size_t size(const type& value)    { UNUSED(value); return sizeof(type); }
 	static size_t maxsize(const type& value) { UNUSED(value); return sizeof(type); }
-	static size_t serializedsize(const type& value) { UNUSED(value); return sizeof(char); /* pay attention here */ }
+	static size_t serializedsize(const type& value) { UNUSED(value); return sizeof(serialized_type); /* pay attention here */ }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -80,14 +85,16 @@ template <>
 struct Traits<int8_t>
 {
 	typedef int8_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
 
 	static size_t size(const type& value)    { UNUSED(value); return Size; }
 	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
-	static size_t serializedsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
 
 	static bool valid(const type& value)     { UNUSED(value); return true; }
 
@@ -98,7 +105,9 @@ template <>
 struct Traits<uint8_t>
 {
 	typedef uint8_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -116,7 +125,9 @@ template <>
 struct Traits<int16_t>
 {
 	typedef int16_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -134,7 +145,9 @@ template <>
 struct Traits<uint16_t>
 {
 	typedef uint16_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -152,7 +165,9 @@ template <>
 struct Traits<int32_t>
 {
 	typedef int32_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -170,7 +185,9 @@ template <>
 struct Traits<uint32_t>
 {
 	typedef uint32_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -188,7 +205,9 @@ template <>
 struct Traits<int64_t>
 {
 	typedef int64_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -206,7 +225,9 @@ template <>
 struct Traits<uint64_t>
 {
 	typedef uint64_t type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -224,7 +245,9 @@ template <>
 struct Traits<size_t>
 {
 	typedef size_t type;
+	typedef uint64_t serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
@@ -242,7 +265,9 @@ template <>
 struct Traits<std::string>
 {
 	typedef std::string type;
+	typedef type serialized_type;
 	enum { Size = sizeof(type) };
+	enum { SerializedSize = -1 };
 
 	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
 	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
