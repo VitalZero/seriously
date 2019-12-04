@@ -580,6 +580,112 @@ inline ssize_t Traits<uint64_t>::deserialize(const char*& src, size_t& avail, ty
 	return static_cast<ssize_t>(initial_avail - avail);
 }
 
+#if SIZEOF_FLOAT == 4
+
+/* -- float ------------------------------------------------------- */
+
+inline ssize_t Traits<float>::serialize(char*& dst, size_t& avail, const type& v)
+{
+	char* dstp = dst;
+	size_t initial_avail = avail;
+
+	if (sizeof(type) > avail)
+		return -1;
+	assert(sizeof(type) <= avail);
+
+	uint32_t uv;
+	memcpy(&uv, &v, sizeof(v));
+
+	uint32_t n_value = static_cast<uint32_t>(htonl(static_cast<uint32_t>(uv)));
+	memcpy(dstp, &n_value, sizeof(uint32_t));
+	dstp += sizeof(type);
+	avail -= sizeof(type);
+
+	if (avail > 0)
+		*dstp = '\0';
+
+	dst = dstp;
+	return static_cast<ssize_t>(initial_avail - avail);
+}
+
+inline ssize_t Traits<float>::deserialize(const char*& src, size_t& avail, type& v)
+{
+	const char* srcp = src;
+	size_t initial_avail = avail;
+
+	if (avail < sizeof(type))
+		return -1;
+	assert(avail >= sizeof(type));
+
+	uint32_t uv;
+
+	uint32_t n_value = 0;
+	memcpy(&n_value, srcp, sizeof(uint32_t));
+	uv = static_cast<uint32_t>(ntohl(static_cast<uint32_t>(n_value)));
+	srcp += sizeof(type);
+	avail -= sizeof(type);
+
+	memcpy(&v, &uv, sizeof(uv));
+
+	src = srcp;
+	return static_cast<ssize_t>(initial_avail - avail);
+}
+
+#endif /* SIZEOF_FLOAT == 4 */
+
+#if SIZEOF_DOUBLE == 8
+
+/* -- double ------------------------------------------------------- */
+
+inline ssize_t Traits<double>::serialize(char*& dst, size_t& avail, const type& v)
+{
+	char* dstp = dst;
+	size_t initial_avail = avail;
+
+	if (sizeof(type) > avail)
+		return -1;
+	assert(sizeof(type) <= avail);
+
+	uint64_t uv;
+	memcpy(&uv, &v, sizeof(v));
+
+	uint64_t n_value = static_cast<uint64_t>(htonll(static_cast<uint64_t>(uv)));
+	memcpy(dstp, &n_value, sizeof(type));
+	dstp += sizeof(type);
+	avail -= sizeof(type);
+
+	if (avail > 0)
+		*dstp = '\0';
+
+	dst = dstp;
+	return static_cast<ssize_t>(initial_avail - avail);
+}
+
+inline ssize_t Traits<double>::deserialize(const char*& src, size_t& avail, type& v)
+{
+	const char* srcp = src;
+	size_t initial_avail = avail;
+
+	if (avail < sizeof(type))
+		return -1;
+	assert(avail >= sizeof(type));
+
+	uint64_t uv;
+
+	uint64_t n_value = 0;
+	memcpy(&n_value, srcp, sizeof(uint64_t));
+	uv = static_cast<uint64_t>(ntohll(static_cast<uint64_t>(n_value)));
+	srcp += sizeof(type);
+	avail -= sizeof(type);
+
+	memcpy(&v, &uv, sizeof(uv));
+
+	src = srcp;
+	return static_cast<ssize_t>(initial_avail - avail);
+}
+
+#endif /* SIZEOF_DOUBLE == 8 */
+
 #if ALLOWS_TEMPLATED_SIZE_T
 
 /* -- size_t ------------------------------------------------------- */

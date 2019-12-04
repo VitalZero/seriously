@@ -255,6 +255,50 @@ struct Traits<uint64_t>
 	static int compare(const type& a, const type& b) { return static_cast<int>(a - b); }
 };
 
+#if SIZEOF_FLOAT == 4
+template <>
+struct Traits<float>
+{
+	typedef float type;
+	typedef uint32_t serialized_type;
+	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
+
+	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
+	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
+
+	static size_t size(const type& value)    { UNUSED(value); return Size; }
+	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
+
+	static bool valid(const type& value)     { UNUSED(value); return true; }
+
+	static int compare(const type& a, const type& b) { return static_cast<int>(a - b); }
+};
+#endif /* SIZEOF_FLOAT == 4 */
+
+#if SIZEOF_DOUBLE == 8
+template <>
+struct Traits<double>
+{
+	typedef double type;
+	typedef uint64_t serialized_type;
+	enum { Size = sizeof(type) };
+	enum { SerializedSize = sizeof(serialized_type) };
+
+	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
+	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
+
+	static size_t size(const type& value)    { UNUSED(value); return Size; }
+	static size_t maxsize(const type& value) { UNUSED(value); return Size; }
+	static size_t serializedsize(const type& value) { UNUSED(value); return SerializedSize; }
+
+	static bool valid(const type& value)     { UNUSED(value); return true; }
+
+	static int compare(const type& a, const type& b) { return static_cast<int>(a - b); }
+};
+#endif /* SIZEOF_DOUBLE == 8 */
+
 #if ALLOWS_TEMPLATED_SIZE_T
 
 template <>

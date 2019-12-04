@@ -49,7 +49,9 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		const std::string original12("Another string value.");
 		const int32_t original13 = -464;
 		const uint64_t original14 = 39824143232LL;
-		packer << original1 << original2 << original3 << original4 << original5 << original6 << original7 << original8 << original9 << original10 << original11 << original12 << original13 << original14;
+		const float original15 = -6.736;
+		const double original16 = 4.736;
+		packer << original1 << original2 << original3 << original4 << original5 << original6 << original7 << original8 << original9 << original10 << original11 << original12 << original13 << original14 << original15 << original16;
 
 		int32_t retrieved1;
 		bool retrieved2;
@@ -65,8 +67,10 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		std::string retrieved12;
 		int32_t retrieved13;
 		uint64_t retrieved14;
+		float retrieved15;
+		double retrieved16;
 
-		packer >> retrieved1 >> retrieved2 >> retrieved3 >> retrieved4 >> retrieved5 >> retrieved6 >> retrieved7 >> retrieved8 >> retrieved9 >> retrieved10 >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14;
+		packer >> retrieved1 >> retrieved2 >> retrieved3 >> retrieved4 >> retrieved5 >> retrieved6 >> retrieved7 >> retrieved8 >> retrieved9 >> retrieved10 >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14 >> retrieved15 >> retrieved16;
 
 		REQUIRE(retrieved1 == original1);
 		REQUIRE(retrieved2 == original2);
@@ -82,6 +86,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		REQUIRE(retrieved12 == original12);
 		REQUIRE(retrieved13 == original13);
 		REQUIRE(retrieved14 == original14);
+		REQUIRE(retrieved15 == original15);
+		REQUIRE(retrieved16 == original16);
 
 		std::cerr << "used space: " << packer.size() << "bytes of " << packer.maxsize() << std::endl;
 
@@ -107,6 +113,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		const std::string original12("Another string value.");
 		const int32_t original13 = -464;
 		const uint64_t original14 = 39824143232LL;
+		const float original15 = -6.736;
+		const double original16 = 4.736;
 
 		int32_t retrieved1;
 		bool retrieved2;
@@ -122,6 +130,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		std::string retrieved12;
 		int32_t retrieved13;
 		uint64_t retrieved14;
+		float retrieved15;
+		double retrieved16;
 
 		packer << original1 << original2;
 
@@ -146,6 +156,10 @@ TEST_CASE( "Packer", "[Packer]" ) {
 
 		packer >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14;
 
+		packer << original15 << original16;
+
+		packer >> retrieved15 >> retrieved16;
+
 		REQUIRE(retrieved1 == original1);
 		REQUIRE(retrieved2 == original2);
 		REQUIRE(retrieved3 == original3);
@@ -160,6 +174,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		REQUIRE(retrieved12 == original12);
 		REQUIRE(retrieved13 == original13);
 		REQUIRE(retrieved14 == original14);
+		REQUIRE(retrieved15 == original15);
+		REQUIRE(retrieved16 == original16);
 	}
 
 	SECTION( "rewind unpacking works" ) {
@@ -179,6 +195,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		const std::string original12("Another string value.");
 		const int32_t original13 = -464;
 		const uint64_t original14 = 39824143232LL;
+		const float original15 = -6.736;
+		const double original16 = 4.736;
 
 		int32_t retrieved1;
 		bool retrieved2;
@@ -194,6 +212,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		std::string retrieved12;
 		int32_t retrieved13;
 		uint64_t retrieved14;
+		float retrieved15;
+		double retrieved16;
 
 		packer << original1 << original2;
 
@@ -218,6 +238,10 @@ TEST_CASE( "Packer", "[Packer]" ) {
 
 		packer >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14;
 
+		packer << original15 << original16;
+
+		packer >> retrieved15 >> retrieved16;
+
 		REQUIRE(retrieved1 == original1);
 		REQUIRE(retrieved2 == original2);
 		REQUIRE(retrieved3 == original3);
@@ -232,6 +256,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		REQUIRE(retrieved12 == original12);
 		REQUIRE(retrieved13 == original13);
 		REQUIRE(retrieved14 == original14);
+		REQUIRE(retrieved15 == original15);
+		REQUIRE(retrieved16 == original16);
 
 		packer.unpacking_rewind();
 
@@ -249,8 +275,10 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		retrieved12 = "";
 		retrieved13 = 0;
 		retrieved14 = 0;
+		retrieved15 = 0.0;
+		retrieved16 = 0.0;
 
-		packer >> retrieved1 >> retrieved2 >> retrieved3 >> retrieved4 >> retrieved5 >> retrieved6 >> retrieved7 >> retrieved8 >> retrieved9 >> retrieved10 >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14;
+		packer >> retrieved1 >> retrieved2 >> retrieved3 >> retrieved4 >> retrieved5 >> retrieved6 >> retrieved7 >> retrieved8 >> retrieved9 >> retrieved10 >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14 >> retrieved15 >> retrieved16;
 
 		REQUIRE(retrieved1 == original1);
 		REQUIRE(retrieved2 == original2);
@@ -266,6 +294,8 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		REQUIRE(retrieved12 == original12);
 		REQUIRE(retrieved13 == original13);
 		REQUIRE(retrieved14 == original14);
+		REQUIRE(retrieved15 == original15);
+		REQUIRE(retrieved16 == original16);
 	}
 
 	SECTION( "setting up a Packer from raw data works" ) {
