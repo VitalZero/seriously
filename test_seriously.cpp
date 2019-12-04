@@ -51,7 +51,24 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		const uint64_t original14 = 39824143232LL;
 		const float original15 = -6.736;
 		const double original16 = 4.736;
-		packer << original1 << original2 << original3 << original4 << original5 << original6 << original7 << original8 << original9 << original10 << original11 << original12 << original13 << original14 << original15 << original16;
+
+		std::vector<int16_t> original17;
+		original17.push_back(9);
+		original17.push_back(42);
+		original17.push_back(11);
+
+		std::vector<int64_t> original18;
+		original18.push_back(9);
+		original18.push_back(42);
+		original18.push_back(11);
+
+		std::vector<double> original19;
+		original19.push_back(-6.736);
+		original19.push_back(11.0);
+		original19.push_back(4.736);
+		original19.push_back(42.0);
+
+		packer << original1 << original2 << original3 << original4 << original5 << original6 << original7 << original8 << original9 << original10 << original11 << original12 << original13 << original14 << original15 << original16 << original17 << original18 << original19;
 
 		int32_t retrieved1;
 		bool retrieved2;
@@ -69,8 +86,11 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		uint64_t retrieved14;
 		float retrieved15;
 		double retrieved16;
+		std::vector<int16_t> retrieved17;
+		std::vector<int64_t> retrieved18;
+		std::vector<double> retrieved19;
 
-		packer >> retrieved1 >> retrieved2 >> retrieved3 >> retrieved4 >> retrieved5 >> retrieved6 >> retrieved7 >> retrieved8 >> retrieved9 >> retrieved10 >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14 >> retrieved15 >> retrieved16;
+		packer >> retrieved1 >> retrieved2 >> retrieved3 >> retrieved4 >> retrieved5 >> retrieved6 >> retrieved7 >> retrieved8 >> retrieved9 >> retrieved10 >> retrieved11 >> retrieved12 >> retrieved13 >> retrieved14 >> retrieved15 >> retrieved16 >> retrieved17 >> retrieved18 >> retrieved19;
 
 		REQUIRE(retrieved1 == original1);
 		REQUIRE(retrieved2 == original2);
@@ -88,6 +108,9 @@ TEST_CASE( "Packer", "[Packer]" ) {
 		REQUIRE(retrieved14 == original14);
 		REQUIRE(retrieved15 == original15);
 		REQUIRE(retrieved16 == original16);
+		REQUIRE(retrieved17 == original17);
+		REQUIRE(retrieved18 == original18);
+		REQUIRE(retrieved19 == original19);
 
 		std::cerr << "used space: " << packer.size() << "bytes of " << packer.maxsize() << std::endl;
 

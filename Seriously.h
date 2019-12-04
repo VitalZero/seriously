@@ -455,6 +455,26 @@ struct Traits<std::string>
 	static int compare(const type& a, const type& b) { return a.compare(b); }
 };
 
+template <typename T>
+struct Traits<std::vector<T>>
+{
+	typedef std::vector<T> type;
+	typedef type serialized_type;
+	enum { Size = sizeof(type) };
+	enum { SerializedSize = -1 };
+
+	static ssize_t serialize(char*& dst, size_t& avail, const type& v);
+	static ssize_t deserialize(const char*& src, size_t& avail, type& v);
+
+	static size_t size(const type& value)    { return value.size(); }
+	static size_t maxsize(const type& value) { return value.size(); }
+	static size_t serializedsize(const type& value) { return (sizeof(uint32_t) + value.size()); }
+
+	static bool valid(const type& value)     { UNUSED(value); return true; }
+
+	// static int compare(const type& a, const type& b) { return a.compare(b); }
+};
+
 template <size_t SIZE>
 class Packer
 {

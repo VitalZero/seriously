@@ -850,6 +850,71 @@ inline ssize_t Traits<std::string>::deserialize(const char*& src, size_t& avail,
 	return static_cast<ssize_t>(initial_avail - avail);
 }
 
+/* -- std::vector<int16_t> ----------------------------------------- */
+
+template <typename T>
+inline ssize_t Traits<std::vector<T>>::serialize(char*& dst, size_t& avail, const type& v)
+{
+	char* dstp = dst;
+	size_t initial_avail = avail;
+
+	uint32_t v_len = static_cast<uint32_t>(v.size());
+	size_t el_ser_size = Traits<T>::SerializedSize;
+
+	if ((4 + (v_len * el_ser_size)) > avail)
+		return -1;
+	assert((4 + (v_len * el_ser_size)) <= avail);
+
+	Traits<uint32_t>::serialize(dstp, avail, v_len);
+
+	typename type::const_iterator it;
+	for (it = v.begin(); it != v.end(); it++) {
+		ssize_t used = Traits<T>::serialize(dstp, avail, *it);
+		if (used < 0) {
+			if (avail > 0)
+				*dstp = '\0';
+
+			dst = dstp;
+			return static_cast<ssize_t>(used);
+		}
+	}
+
+	if (avail > 0)
+		*dstp = '\0';
+
+	dst = dstp;
+	return static_cast<ssize_t>(initial_avail - avail);
+}
+
+template <typename T>
+inline ssize_t Traits<std::vector<T>>::deserialize(const char*& src, size_t& avail, type& v)
+{
+	const char* srcp = src;
+	size_t initial_avail = avail;
+
+	uint32_t v_len = 0;
+	if (Traits<uint32_t>::deserialize(srcp, avail, v_len) < 0)
+		return -1;
+	size_t el_ser_size = Traits<T>::SerializedSize;
+
+	if (avail < (v_len * el_ser_size))
+		return -1;
+	assert(avail >= (v_len * el_ser_size));
+
+	for (uint32_t i = 0; i < v_len; i++) {
+		T el;
+		ssize_t consumed = Traits<T>::deserialize(srcp, avail, el);
+		if (consumed < 0) {
+			src = srcp;
+			return consumed;
+		}
+		v.push_back(el);
+	}
+
+	src = srcp;
+	return static_cast<ssize_t>(initial_avail - avail);
+}
+
 } /* end of namespace seriously */
 
 #endif /* SERIOUSLY_IMPL_HPP */
