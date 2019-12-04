@@ -16,6 +16,7 @@ The higher-level API:
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <stdint.h>
 
 #include "Seriously.h"
@@ -28,8 +29,10 @@ void myfunc()
 	bool value2 = true;
 	int16_t value3 = -2345;
 	std::string value4("only an example");
+	double value5 = -6.736;
+	std::vector<int64_t> value6 = { 42, 11, 93 };
 
-	packer << value1 << value2 << value3 << value4;
+	packer << value1 << value2 << value3 << value4 << value5 << value6;
 
 	std::cout << "packed size: " << packer.size() << std::endl;
 	// packer.data() contains the serialized data
@@ -38,10 +41,17 @@ void myfunc()
 	bool restored2;
 	int16_t restored3;
 	std::string restored4;
+	double restored5 = -6.736;
+	std::vector<int64_t> restored6;
 
-	packer >> restored1 >> restored2 >> restored3 >> restored4;
+	packer >> restored1 >> restored2 >> restored3 >> restored4 >> restored5 >> restored6;
 
-	std::cout << "unpacked: " << restored1 << " " << (restored2 ? "t" : "f") << " " << restored3 << " " << restored4 << std::endl;
+	std::cout << "unpacked: " << restored1 << " " << (restored2 ? "t" : "f") << " " << restored3 << " " << restored4 << " " << restored5 << std::endl;
+
+	std::vector<int64_t>::const_iterator it;
+	for (it = restored6.begin(); it != restored6.end(); it++) {
+		std::cout << *it << std::endl;
+	}
 }
 ```
 
